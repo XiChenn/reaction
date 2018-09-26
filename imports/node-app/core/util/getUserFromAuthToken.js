@@ -1,4 +1,5 @@
 import ReactionError from "@reactioncommerce/reaction-error";
+import { decodeAccountOpaqueId } from "@reactioncommerce/reaction-graphql-xforms/account";
 import { Logger } from "./logger";
 import expandAuthToken from "./expandAuthToken";
 
@@ -30,7 +31,7 @@ async function getUserFromAuthToken(loginToken, context) {
     throw new ReactionError("access-denied", "Token is not an access token");
   }
 
-  const _id = tokenObj.sub;
+  const _id = decodeAccountOpaqueId(tokenObj.sub);
   const { collections } = context;
   const { users } = collections;
 

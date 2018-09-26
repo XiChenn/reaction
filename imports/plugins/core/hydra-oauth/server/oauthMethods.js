@@ -1,4 +1,5 @@
 import { check, Match } from "meteor/check";
+import { encodeAccountOpaqueId } from "@reactioncommerce/reaction-graphql-xforms/account";
 import Reaction from "/imports/plugins/core/core/server/Reaction";
 import Logger from "@reactioncommerce/logger";
 import hydra from "./util/hydra";
@@ -21,7 +22,7 @@ export function oauthLogin(options) {
 
   return hydra
     .acceptLoginRequest(challenge, {
-      subject: Reaction.getUserId(),
+      subject: encodeAccountOpaqueId(Reaction.getUserId()),
       remember,
       remember_for: HYDRA_SESSION_LIFESPAN || 3600 // eslint-disable-line camelcase
     })
